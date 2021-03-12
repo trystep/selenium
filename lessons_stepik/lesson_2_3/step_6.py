@@ -1,27 +1,27 @@
-# Открыть страницу http://suninjuly.github.io/alert_accept.html
+# Открыть страницу http://suninjuly.github.io/redirect_accept.html
 # Нажать на кнопку
-# Принять confirm
-# На новой странице решить капчу для роботов, чтобы получить число с ответом
+# Переключиться на новую вкладку
+# Пройти капчу для робота и получить число-ответ
 import math
 
 from selenium import webdriver
 from time import sleep
 
 browser = webdriver.Chrome()
-link = 'http://suninjuly.github.io/alert_accept.html'
+link = 'http://suninjuly.github.io/redirect_accept.html'
 browser.get(link)
 
 button = browser.find_element_by_xpath('//button[text()="I want to go on a magical journey!"]')
 button.click()
 
-allert = browser.switch_to.alert
-allert.accept()
+new_window = browser.window_handles[1]
+browser.switch_to.window(new_window)
 
 x = browser.find_element_by_xpath('//span[@id="input_value"]').text
-result = math.log(abs(12 * math.sin(int(x))))
+result = str(math.log(abs(12 * math.sin(int(x)))))
 
 input = browser.find_element_by_xpath('//input[@id="answer"]')
-input.send_keys(str(result))
+input.send_keys(result)
 
 submit = browser.find_element_by_xpath('//button[text()="Submit"]')
 submit.click()
